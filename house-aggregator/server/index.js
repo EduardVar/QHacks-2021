@@ -8,6 +8,8 @@ const webpack = require('webpack');
 const webpackConfig = require("../webpack.config");
 const compiler = webpack(webpackConfig);
 
+const Kijiji = require("../src/scrapers/kijiji");
+
 const port = process.env.PORT || 3003;
 
 const app = express();
@@ -19,7 +21,7 @@ app.use(bodyParser.json());
 app.use(
     require("webpack-dev-middleware") (compiler, {
         publicPath: webpackConfig.output.publicPath,
-        stats: false
+        stats: false,
     })
 );
 
@@ -30,6 +32,12 @@ app.use(express.static("../dist"));
 app.get('/', (req ,res) => {
     res.sendFile(path.resolve(__dirname, "../dist/index.html"));
 });
+
+app.get('/test', async (req, res) => {
+
+    let output = await Kijiji.execute();
+    res.send(output);
+})
 
 app.listen(port, () => {
     console.log(`App listening on port ${port}`);

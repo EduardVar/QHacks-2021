@@ -1,5 +1,6 @@
 const axios = require('axios');
 const cheerio = require('cheerio');
+const { exception } = require('console');
 const fs = require("fs");
 
 module.exports = {
@@ -11,74 +12,76 @@ module.exports = {
         return s.replace(/(\r\n|\n|\r|)/gm, "").trim();
     },
     async execute() {
+        
+        await new Promise(resolve => setTimeout(resolve, 5000));
+        return await this.getResults(this.search, [], 1);
+    },
+    async getResults(search, results, depth) {
 
-        let page = 1;
-        let done = false;
+        console.log(`Getting results for page ${depth}`);
 
-        const results = []
-        let s = this.search;
-        let i = 0;
+        let html;
+        let $;
 
-        while (!done) {
+        try {
+            html = await axios.get(this.baseURL + search);
 
-            let html = await axios.get(this.baseURL + s);
-            let $ = cheerio.load(html.data);
+            if (html === undefined) throw new exception("fuck everything")
 
-            $("#mainPageContent > div.layout-3 > div.col-2 > div:nth-child(3)").children("div.search-item").each((_, y) => {
-
-                results.push({});
-
-                $(y).children("div.clearfix").children(".info").children().children().each((_, el) => {
-
-                    let text = $(el).text().replace(/(\r\n|\n|\r|)/gm, "").trim();
-                    let className = this.cleanupText($(el).attr("class"));
-
-                    if (className == "location") {
-
-                        results[i] = {
-                            ...results[i], ...{
-                                "date-posted": this.cleanupText($(el).children("span.date-posted").text()),
-                                "location": this.cleanupText($(el).children().first().text()),
-                            }
-                        };
-                    }
-
-                    else {
-                        results[i] = { ...results[i], [className]: text };
-                    }
-                });
-
-                i++;
-            });
-
-            let isNextPage = $('#mainPageContent > div.layout-3 > div.col-2 > div:nth-child(3) > div.bottom-bar > div.pagination > a').filter((i, el) => {
-
-                return $(el).attr("href").match(new RegExp(`/page-${page + 1}/`, "g")) != null;
-            });
-
-            let newSearch = isNextPage.first().attr("href");
-
-            done = newSearch == null || newSearch == undefined;
-            if (!done) {
-                console.log(`Done on page ${page}, moving onto next page.`);
-                s = newSearch;
-            }
-            else (console.log(`Finished scraping on page ${page}`));
-            page++;
+            $ = cheerio.load(html.data);
+        }
+        catch (err) {
+            console.error(err.message);
         }
 
-        return results
+        let urls = $("#mainPageContent > div.layout-3 > div.col-2 > div:nth-child(3)").children("div.search-item").map((_, el) => {
+            return $(el).attr("data-vip-url");
+        }).get();
+
+        const posts = await Promise.all(urls.map(s => axios.get(this.baseURL + s)));
+
+        console.log(`Got ${posts.length} results.`);
+
+        $("#mainPageContent > div.layout-3 > div.col-2 > div:nth-child(3)").children("div.search-item").each((i, wrapperEl) => {
+
+            const entry = {};
+            const $$ = cheerio.load(posts[i].data);
+
+            $(wrapperEl).children("div.clearfix").children(".info").children().children().each((_, el) => {
+
+                let className = this.cleanupText($(el).attr("class"));
+
+                if (className == "location") {
+
+                    entry["date-posted"] = this.cleanupText($(el).children("span.date-posted").text());
+                }
+
+                else if (className == "description") {
+                    return true;
+                }
+
+                else {
+                    entry[className] = $(el).text().replace(/(\r\n|\n|\r|)/gm, "").trim();
+                }
+            });
+
+            entry["description"] = $$("#vip-body > div.root-2377010271.light-3420168793.card-745541139 > div > div.showMoreChild-3420331552.showMoreChild__newRentals-917604537 > div").first().text();
+            entry["address"] = $$("span[itemprop='address']").text();
+            entry["landlord"] = $$("#vip-body > div.itemInfoSidebar-408428561.itemInfoSidebar__newRentals-3379548915 > div.r2s-1114502950 > h3 > span").text();
+            entry["bedrooms"] = $$("#vip-body > div.realEstateTitle-1440881021 > div.unitRow-1281171205 > div > li:nth-child(2) > span").text();
+
+            results.push(entry);
+        });
+
+        let next = $('#mainPageContent > div.layout-3 > div.col-2 > div:nth-child(3) > div.bottom-bar > div.pagination > a').filter((_, el) => {
+
+            return $(el).attr("href").match(new RegExp(`/page-${depth + 1}/`, "g")) != null;
+        }).first().attr("href");
+
+        if (next != null || next != undefined) {
+            results = this.getResults(next, results, ++depth);
+        };
+
+        return results;
     }
 }
-
-module.exports.execute().then(res => {
-    console.log(res);
-    console.log(`Got ${res.length} results`);
-    fs.writeFileSync("output.json", JSON.stringify(res));
-}).catch(err => {
-    let d = new Date();
-    let name = `error-${d.getTime()}.txt`;
-    fs.writeFileSync(name, err);
-    console.error(err);
-    console.error(`Got an error and wrote to ${name}`)
-});

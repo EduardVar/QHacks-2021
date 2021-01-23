@@ -1,5 +1,6 @@
 from server import app
 from flask_sqlalchemy import SQLAlchemy
+
 """
 This file defines all models used by the server
 These models provide us a object-oriented access

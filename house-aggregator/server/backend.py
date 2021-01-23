@@ -1,3 +1,4 @@
+from server.models import db, User, Ticket, Order
 from werkzeug.security import generate_password_hash, check_password_hash
 
 from datetime import date, datetime

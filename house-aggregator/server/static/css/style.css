@@ -1,0 +1,35 @@
+.sub-header {
+    display: flex;
+    flex-direction: row;
+}
+
+.sub-header > h2 {
+
+    flex-grow: 2;
+}
+
+/* .bootstrap-datetimepicker-widget  {
+    opacity: 1 !important;
+    visibility: visible !important  ;
+} */
+
+.clickable {
+
+    cursor: pointer;
+}
+
+.clickable:hover {
+
+    text-decoration: underline;
+}
+
+input:focus:read-only {
+
+    border-color: #ced4da !important;
+    box-shadow: none !important;
+}
+
+.global-header {
+
+    background-color: #FFE602;
+}

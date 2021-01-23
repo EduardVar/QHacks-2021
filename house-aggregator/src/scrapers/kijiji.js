@@ -1,10 +1,6 @@
 const axios = require('axios');
 const cheerio = require('cheerio');
 const fs = require("fs");
-const { getDefaultSettings } = require('http2');
-
-//import axios from 'axios';
-//import cheerio from 'cheerio';
 
 module.exports = {
     name: "Kijiji.ca",
@@ -23,62 +19,57 @@ module.exports = {
         let s = this.search;
         let i = 0;
 
-        try {
+        while (!done) {
 
-            while (!done) {
+            let html = await axios.get(this.baseURL + s);
+            let $ = cheerio.load(html.data);
 
-                let html = await axios.get(this.baseURL + s);
-                let $ = cheerio.load(html.data);
+            $("#mainPageContent > div.layout-3 > div.col-2 > div:nth-child(3)").children("div.search-item").each((_, y) => {
 
-                $("#mainPageContent > div.layout-3 > div.col-2 > div:nth-child(3)").children("div.search-item").each((_, y) => {
+                results.push({});
 
-                    results.push({});
+                $(y).children("div.clearfix").children(".info").children().children().each((_, el) => {
 
-                    $(y).children("div.clearfix").children(".info").children().children().each((_, el) => {
+                    let text = $(el).text().replace(/(\r\n|\n|\r|)/gm, "").trim();
+                    let className = this.cleanupText($(el).attr("class"));
 
-                        let text = $(el).text().replace(/(\r\n|\n|\r|)/gm, "").trim();
-                        let className = this.cleanupText($(el).attr("class"));
+                    if (className == "location") {
 
-                        if (className == "location") {
+                        results[i] = {
+                            ...results[i], ...{
+                                "date-posted": this.cleanupText($(el).children("span.date-posted").text()),
+                                "location": this.cleanupText($(el).children().first().text()),
+                            }
+                        };
+                    }
 
-                            results[i] = {
-                                ...results[i], ...{
-                                    "date-posted": this.cleanupText($(el).children("span.date-posted").text()),
-                                    "location": this.cleanupText($(el).children().first().text()),
-                                }
-                            };
-                        }
-
-                        else {
-                            results[i] = { ...results[i], [className]: text };
-                        }
-                    });
-
-                    i++;
+                    else {
+                        results[i] = { ...results[i], [className]: text };
+                    }
                 });
 
-                let isNextPage = $('#mainPageContent > div.layout-3 > div.col-2 > div:nth-child(3) > div.bottom-bar > div.pagination > a').filter((i, el) => {
+                i++;
+            });
 
-                    return $(el).attr("href").match(new RegExp(`/page-${page + 1}/`, "g")) != null;
-                });
+            let isNextPage = $('#mainPageContent > div.layout-3 > div.col-2 > div:nth-child(3) > div.bottom-bar > div.pagination > a').filter((i, el) => {
 
-                let newSearch = isNextPage.first().attr("href");
+                return $(el).attr("href").match(new RegExp(`/page-${page + 1}/`, "g")) != null;
+            });
 
-                done = newSearch == null || newSearch == undefined;
-                if (!done) {
-                    console.log(`Done on page ${page}, moving onto next page.`);
-                    s = newSearch;
-                }
-                else (console.log(`Finished scraping on page ${page}`));
-                page++;
+            let newSearch = isNextPage.first().attr("href");
+
+            done = newSearch == null || newSearch == undefined;
+            if (!done) {
+                console.log(`Done on page ${page}, moving onto next page.`);
+                s = newSearch;
             }
+            else (console.log(`Finished scraping on page ${page}`));
+            page++;
         }
-        catch (err) {
-            console.log(err);
-        }
+    }
 
         return results
-    }
+}
 }
 
 module.exports.execute().then(res => {

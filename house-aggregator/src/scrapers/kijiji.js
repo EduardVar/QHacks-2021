@@ -66,10 +66,9 @@ module.exports = {
             else (console.log(`Finished scraping on page ${page}`));
             page++;
         }
-    }
 
         return results
-}
+    }
 }
 
 module.exports.execute().then(res => {

@@ -1,6 +1,5 @@
 from server import app
 from flask_sqlalchemy import SQLAlchemy
-from dataclasses import dataclass
 
 """
 This file defines all models used by the server

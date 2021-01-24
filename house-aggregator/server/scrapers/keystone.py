@@ -26,6 +26,7 @@ def getResults(search, pageNum=0):
 
         bedroomStr = postSoup.find("div", class_="specsCol").find("strong", string="Rooms: ").next_sibling
         date = postSoup.find("div", class_="specsCol").find("strong", string="Date Available: ").next_sibling
+        description = postSoup.find("p", class_="listDesc").string
 
         if (bedroomStr == "Bachelor"):
             bedrooms = 1;
@@ -50,7 +51,8 @@ def getResults(search, pageNum=0):
             'landlords': "Keystone Properties",
             'url': f'{base_url}/{postLink}',
             "date-available": date,
-            "images": images
+            "images": images,
+            "description": description
         })
 
     return results

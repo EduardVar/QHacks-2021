@@ -1,4 +1,7 @@
 from server.models import db, User, House
+from server.scrapers import scrapers
+from sqlalchemy import Column, Date, Integer, Text, create_engine, inspect
+
 import json
 import os
 
@@ -6,49 +9,70 @@ import os
 This file defines all backend logic that interacts with database and other services
 """
 
-def get_available_tickets(user):
+output_path = 'server/scrapers/output/'
 
-    return House.query.all()
+def object_as_dict(obj):
+    return {c.key: getattr(obj, c.key)
+            for c in inspect(obj).mapper.column_attrs}
+
+def get_all():
+
+    if (House.query.first() is None):
+        startScrape()
+        loadJSON()
+
+    return [object_as_dict(x) for x in House.query.all()]
 
 #Commit House to db
-def save_houses():
+def save_houses(file):
+
+    print("Loading " + file)
     # Read json file
-    with open(os.getcwd() + '/server/output.json', 'r') as f:
-        for entry in json.load(f):
-            data = entry
-            name = data['title'] or None
-            price = data['price'] or None
-            address = data['address'] or None
+    with open(output_path + file, 'r') as jsonLike:
+
+        for entry in json.load(jsonLike):
+
+            name = entry['title'] or None
+            price = entry['price'] or None
+            address = entry['address'] or None
             #bedrooms = data['bedrooms'] or None
             #bathrooms = data['bathrooms'] or None
-            description = data['description'] or None
-            url = data['url'] or None
+            description = entry['description'] or None
+            url = entry['url'] or None
             #landlord = data['landlord'] or None
-            date = data['date-available'] or None
-            imgs = data['images'] or None
-            img_urls = ','.join(imgs)
+            date = entry['date-posted'] or None
+            imgs = entry['images'] or None
+            img_urls = ','.join(imgs) if imgs else ''
             #update db with new ticket info
             house = House(name = name, price = price, address = address, description = description, url = url, date = date, img_urls = img_urls)
             db.session.add(house)
             db.session.commit()
             
-
 def clean_database():
     db.session.query(House).delete()
     db.session.commit()
-
-
 
 def startScrape(toDo=None):
 
     if toDo is None:
 
-        pass
-        # do all
+        for func in scrapers:
+
+            scrapers[func]()
+
+        clean_database()
+        loadJSON()
 
     else:
 
-        for scraper in toDo:
+        for func in toDo:
 
-            pass
-            #do that specific one
+            scraper[func]()
+
+    return 'scrape started'
+
+def loadJSON():
+
+    toLoad = [file for file in os.listdir(output_path) if os.path.isfile(os.path.join(output_path+file))]
+    for file in toLoad:
+        save_houses(file)

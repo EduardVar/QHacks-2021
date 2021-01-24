@@ -1,4 +1,4 @@
-from flask import render_template, request, session, redirect, flash
+from flask import render_template, request, session, redirect, flash, jsonify
 from server import app
 import server.backend as bn
 from server.models import db, User, House
@@ -14,8 +14,17 @@ The html templates are stored in the 'templates' folder.
 def savehouses():
     bn.save_houses()
     return ('', 200)
+    
+@app.route('/', methods=['GET'])
+def index():
+    return ('wooo', 200)
+
 @app.route('/scrape', methods=['GET'])
 def scrape():
 
-    bn.startScrape()
-    return ('', 200)
+    return(bn.startScrape(), 200)
+
+@app.route("/all", methods=['GET'])
+def all():
+
+    return jsonify(bn.get_all())

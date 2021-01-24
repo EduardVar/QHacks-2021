@@ -1,0 +1,107 @@
+{% extends 'base.html' %}
+{% from "macros/modals.jinja" import addModal, buyModal %}
+
+{% block header %}
+<h1>{% block title %}Profile{% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+<header class="sub-header">
+    <h2 id="welcome-header">Welcome {{ user.name }}!</h2>
+    <button class="btn btn-primary"><a id="logout-button" href='/logout' class="text-light">Logout</a></button>
+</header>
+
+<section id="main" class="my-4">
+
+    <h3 id="error_msg">{{msg}}</h3>
+
+    <div class="container mb-3">
+        <div class="row">
+            <div class="col">
+                <h3>Purchase Tickets</h3>
+            </div>
+            <div class="col">
+                <h6 class="text-right align-middle" id="balance">Current Balance: <span id="user-balance">{{user.balance}}</span></h6>
+            </div>
+        </div>
+    </div>
+    <table class="available-to-buy table mb-3">
+        <thead class="thread-light">
+            <tr>
+                <th scope="col">Ticket Name</th>
+                <th scope="col">Available</th>
+                <th scope="col">Price</th>
+                <th scope="col">Purchase</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% if not tickets == None %}
+            {% for ticket in tickets %}
+            <tr id={{ticket.name|replace(' ', '-')}} class="ticket">
+                <td class="ticket-name">{{ticket.name}}</td>
+                <td class="ticket-quantity-available">{{ticket.quantity}}</td>
+                <td class="ticket-quantity-available">{{ticket.price}}</td>
+                <td><button class="btn btn-link p-0" id="btn-buy-{{ticket.name|replace(' ', '-')}}" onclick="LoadBuyModal('{{ticket.name}}', {{ticket.quantity}}, {{ticket.price}}, '{{ticket.date}}' )">Buy Ticket</button></td>
+            </tr>
+            {% endfor %}
+            {% else %}
+            <tr>
+                <td colspan="100%" class="text-center p-4">:( Looks like there are none available</td>
+            </tr>
+            {% endif %}
+        </tbody>
+    </table>
+
+    <div class="container mb-3">
+        <div class="row">
+            <div class="col-8">
+                <h3>Update Tickets</h3>
+            </div>
+            <div class="col">
+                <button id="btn-add-ticket" type="button" class="btn btn-primary mx-3" data-target="#sell-modal" data-toggle="modal">Add
+                    New Ticket</button>
+            </div>
+        </div>
+    </div>
+    <table class="table mb-3">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Quantity</th>
+                <th>Price</th>
+                <th>Date</th>
+                <th>Update</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% set user_tickets = tickets|default([])|selectattr("creator", "eq", user.id)|list %}
+            {% if user_tickets|length > 0 %}
+            {% for ticket in user_tickets %}
+            <tr>
+                <td>{{ticket.name}}</td>
+                <td>{{ticket.quantity}}</td>
+                <td>{{ticket.price}}</td>
+                <td>{{ticket.date}}</td>
+                <td><button class="btn btn-link p-0" id="btn-update-{{ ticket.name | replace(' ', '_') }}"
+                        onclick='LoadUpdateModal("{{ticket.name}}", {{ticket.quantity}}, {{ticket.price}}, "{{ticket.date}}", {{ticket.id}})'>Update Ticket</button>
+                </td>
+            </tr>
+            {% endfor %}
+            {% else %}
+            <tr>
+                <td colspan="100%" class="text-center p-4">
+                    <div>Looks like you don't have any tickets. Why not <a href class="clickable"
+                            data-target="#sell-modal" data-toggle="modal">add one?</a></div>
+                </td>
+            </tr>
+            {% endif %}
+        </tbody>
+    </table>
+</section>
+
+{{ addModal("update", "Update Ticket") }}
+{{ addModal("sell", "Add New Ticket") }}
+{{ buyModal("buy", "Purchase Ticket") }}
+
+<script src="{{ url_for('static', filename='js/display_elements.js') }}"></script>
+{% endblock %}

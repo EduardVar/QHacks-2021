@@ -1,0 +1,98 @@
+{% macro addModal(id, title) -%}
+
+<section class="modal fade" id="{{id}}-modal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">{{title}}</h5>
+                <button type="button" class="close" data-dismiss="modal">
+                    <span>&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form method="POST" id="{{id}}-ticket-form" data-ticket-id="">
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend"><label for="Name" class="input-group-text">Name</label></div>
+                        <input type="text" name="Name" class="form-control" id="{{id}}-ticket-name"
+                            placeholder="Enter Name">
+                    </div>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend"><label for="Quantity" class="input-group-text">Quantity</label>
+                        </div>
+                        <input name="Quantity" type="number" min=1 max=100 class="form-control" id="{{id}}-ticket-quantity" value="1">
+                    </div>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend"><label for="Price" class="input-group-text">Price</label></div>
+                        <input name="Price" type="number" min=10 max=100 class="form-control" id="{{id}}-ticket-price" value="10.00">
+                    </div>
+                    <div class="input-group mb-3">
+                        <label class="input-group-text" for="Date">Expiration Date</label>
+                        <input name="Date" type="text" class="form-control datetimepicker-input" id="{{id}}-datetime"
+                            data-toggle="datetimepicker" data-target="#{{id}}-datetime" />
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" id="{{id}}-ticket-button">Save</button>
+            </div>
+        </div>
+    </div>
+</section>
+
+{%- endmacro %}
+
+{% macro buyModal(id, title) -%}
+
+<section class="modal fade" id="{{id}}-modal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">{{title}}</h5>
+                <button type="button" class="close" data-dismiss="modal">
+                    <span>&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form method="POST" id="{{id}}-ticket-form">
+                    <div class="container-fluid mb-3">
+                        <div class="row">
+                            <div class="input-group col-sm px-0 mr-1">
+                                <div class="input-group-prepend"><label for="Name" class="input-group-text">Ticket
+                                        Name</label></div>
+                                <input type="text" name="Name" class="form-control"
+                                    placeholder="Enter Name" readonly>
+                            </div>
+                            <div class="input-group col-4 px-0 ml-1">
+                                <div class="input-group-prepend"><label for="Price"
+                                        class="input-group-text">Price</label></div>
+                                <input name="Price" type="number" min=10 max=100 class="form-control" value="10.00"
+                                    readonly>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="input-group mb-3">
+                        <label class="input-group-text" for="Date">Expiration Date</label>
+                        <input name="Date" type="text" class="form-control" readonly />
+                    </div>
+                    <div class="form-group mb-3">
+                        <div class="input-group">
+                            <div class="input-group-prepend"><label for="Quantity"
+                                    class="input-group-text">Quantity</label></div>
+                            <input name="Quantity" type="number" min=1 max=100 class="form-control" id="{{id}}-ticket-quantity" value="1">
+                        </div>
+                        <small id="buy-max" class="form-text text-muted">Max available: .</small>
+                    </div>
+                    <div class="border-secondary border-top my-3"></div>
+                    <span id="cost-output">Cost: </span>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" id="{{id}}-ticket-button">Buy</button>
+            </div>
+        </div>
+    </div>
+</section>
+
+{%- endmacro %}

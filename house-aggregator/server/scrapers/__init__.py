@@ -1,7 +1,8 @@
-from server.scrapers import keystone, kijiji, mckinnon
+from server.scrapers import keystone, kijiji, mckinnon, panadew
 
 scrapers = {
     "keystone": keystone.execute,
     "kijiji": kijiji.execute,
-    "mickinnon": mckinnon.execute
+    "mckinnon": mckinnon.execute,
+    "panadew"
 }

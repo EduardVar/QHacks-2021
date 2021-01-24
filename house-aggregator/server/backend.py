@@ -11,3 +11,5 @@ def startScrape(toDo=None):
 
             pass
             #do that specific one
+
+    return 'scrape started'

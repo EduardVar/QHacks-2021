@@ -9,9 +9,11 @@ http requests from the client (browser) through templating.
 The html templates are stored in the 'templates' folder. 
 """
 
+@app.route('/', methods=['GET'])
+def index():
+    return ('wooo', 200)
 
 @app.route('/scrape', methods=['GET'])
 def scrape():
 
-    bn.startScrape()
-    return ('', 200)
+    return(bn.startScrape(), 200)

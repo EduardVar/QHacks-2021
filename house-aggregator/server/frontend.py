@@ -1,4 +1,4 @@
-from flask import render_template, request, session, redirect, flash
+from flask import render_template, request, session, redirect, flash, jsonify
 from server import app
 import server.backend as bn
 
@@ -17,3 +17,8 @@ def index():
 def scrape():
 
     return(bn.startScrape(), 200)
+
+@app.route("/all", methods=['GET'])
+def all():
+
+    return jsonify(bn.get_all())

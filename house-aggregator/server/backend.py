@@ -1,5 +1,6 @@
 from server.models import db, User, House
 from server.scrapers import scrapers
+from sqlalchemy import Column, Date, Integer, Text, create_engine, inspect
 
 import json
 import os
@@ -10,9 +11,17 @@ This file defines all backend logic that interacts with database and other servi
 
 output_path = 'server/scrapers/output/'
 
-def get_available_tickets(user):
+def object_as_dict(obj):
+    return {c.key: getattr(obj, c.key)
+            for c in inspect(obj).mapper.column_attrs}
 
-    return House.query.all()
+def get_all():
+
+    if (House.query.first() is None):
+        startScrape()
+        loadJSON()
+
+    return [object_as_dict(x) for x in House.query.all()]
 
 #Commit House to db
 def save_houses(file):

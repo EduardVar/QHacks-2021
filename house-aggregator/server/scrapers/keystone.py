@@ -2,6 +2,8 @@ import requests
 import json
 import re
 
+import os
+
 from bs4 import BeautifulSoup
 
 base_url = 'http://www.keyprop.com/listings'
@@ -63,7 +65,7 @@ def execute():
 
     search = '/'
     results = getResults(search)
-        
-    with open(f'output/{output}', 'w') as file:
+
+    with open(f'server/scrapers/output/{output}', 'w') as file:
         file.write(json.dumps(results, sort_keys=True, indent=4))
         print(f'Wrote {len(results)} to "output/{output}')

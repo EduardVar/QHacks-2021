@@ -4,7 +4,7 @@ import re
 
 from bs4 import BeautifulSoup
 
-base_url = 'http://www.keyprop.com/listings/'
+base_url = 'http://www.keyprop.com/listings'
 output = 'keystone-output.json'
 
 def getResults(search, pageNum=0):
@@ -17,7 +17,7 @@ def getResults(search, pageNum=0):
 
         postLink = post.select_one("a", href=re.compile('$listing.html\?id=[0-9]+$'))["href"]
 
-        postReq = requests.get(base_url + postLink)
+        postReq = requests.get(base_url + '/' + postLink)
         postSoup = BeautifulSoup(postReq.content, "html.parser")
 
         title = post.find("div", class_="listInformation").find('h2').find_next(string=True)
@@ -33,6 +33,8 @@ def getResults(search, pageNum=0):
         else:
             bedrooms = re.findall(r'\d+', postSoup.find("div", class_="specsCol").find("strong", string="Rooms: ").next_sibling)[0]
 
+        images = [f'{base_url}/{img["href"]}'.replace('-gallery', '').replace(' ', '%20') for img in postSoup.find("div", id="galPicContainer").find_all("a")]
+
         utilites = {
             'heat': bool(post.find("img", alt="Heat")),
             'electric': bool(post.find("img", alt="Utilities")),
@@ -46,13 +48,14 @@ def getResults(search, pageNum=0):
             'utilites': utilites,
             'bedrooms': bedrooms,
             'landlords': "Keystone Properties",
-            'url': postLink,
-            "date-available": date
+            'url': f'{base_url}/{postLink}',
+            "date-available": date,
+            "images": images
         })
 
     return results
 
-search = ''
+search = '/'
 results = getResults(search)
     
 with open(f'output/{output}', 'w') as file:

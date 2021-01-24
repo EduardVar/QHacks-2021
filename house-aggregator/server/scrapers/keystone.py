@@ -50,16 +50,20 @@ def getResults(search, pageNum=0):
             'bedrooms': bedrooms,
             'landlords': "Keystone Properties",
             'url': f'{base_url}/{postLink}',
-            "date-available": date,
+            "date-posted": date,
             "images": images,
             "description": description
         })
 
     return results
 
-search = '/'
-results = getResults(search)
-    
-with open(f'output/{output}', 'w') as file:
-    file.write(json.dumps(results, sort_keys=True, indent=4))
-    print(f'Wrote {len(results)} to "output/{output}')
+def execute():
+
+    print("Starting Keystone")
+
+    search = '/'
+    results = getResults(search)
+        
+    with open(f'output/{output}', 'w') as file:
+        file.write(json.dumps(results, sort_keys=True, indent=4))
+        print(f'Wrote {len(results)} to "output/{output}')

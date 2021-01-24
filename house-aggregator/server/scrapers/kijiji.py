@@ -38,7 +38,7 @@ def getResults(pageURL, pageNum=1):
                     'title': title,
                     'price': price,
                     'address': address,
-                    'date_posted': date_posted,
+                    'date-posted': date_posted,
                     'images': images,
                     'description': description,
                     'url': base_url + search
@@ -57,9 +57,13 @@ def getResults(pageURL, pageNum=1):
 
     return results
 
-search = "/b-kingston-on/student-housing/k0l1700183"
-results = getResults(search)
+def execute():
 
-with open('output/kijiji-output.json', 'w') as file:
-    file.write(json.dumps(results, sort_keys=True, indent=4))
-    print(f'wrote {len(results)} to "output/kijiji-output.json"')
+    print("Starting Kijiji")
+
+    search = "/b-kingston-on/student-housing/k0l1700183"
+    results = getResults(search)
+
+    with open('output/kijiji-output.json', 'w') as file:
+        file.write(json.dumps(results, sort_keys=True, indent=4))
+        print(f'wrote {len(results)} to "output/kijiji-output.json"')

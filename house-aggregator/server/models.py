@@ -17,41 +17,25 @@ class User(db.Model):
     """
     id = db.Column(db.Integer, primary_key=True)
     email = db.Column(db.String(100), unique=True)
-    password = db.Column(db.String(100))
     name = db.Column(db.String(1000))
-    orders = db.relationship('Order', backref='User', lazy=True)
-    balance = db.Column(db.Integer)
+    password = db.Column(db.String(100))
+    bookmarks = db.Column(db.String(10000))
 
-    def __repr__(self):
-
-        return f'<User - Id: {self.id}, Name: {self.name}, Email: {self.email}, Orders: {list(self.orders)}>'
-
-class Ticket(db.Model):
+class House(db.Model):
     """
-    A ticket model which defines the sql table
+    A Housing model which defines the sql table
     """
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(60))
-    quantity = db.Column(db.Integer)
-    price = db.Column(db.Float)
-    date = db.Column(db.String(8)) # 20201104
-    creator = db.Column(db.Integer, db.ForeignKey('user.id'))
-    orders = db.relationship('Order', backref='Ticket', lazy=True)
-
-    def __repr__(self):
-
-        return f'<Ticket - Name: {self.name}, Orders: {list(self.orders)}, Creator: {self.creator}>'
-
-class Order(db.Model):
-
-    id = db.Column(db.Integer, primary_key = True)
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
-    ticket_id = db.Column(db.Integer, db.ForeignKey('ticket.id'), nullable=False)
-    quantity = db.Column(db.Integer)
-
-    def __repr__(self):
-        return f'<Order User - ID: {self.user_id}, Ticket ID: {self.ticket_id}, Quantity: {self.quantity}>'
-
+    name = db.Column(db.String(200))
+    price = db.Column(db.String(100))
+    address = db.Column(db.String(500))
+    #bedrooms = db.Column(db.Float)
+    #bathrooms = db.Column(db.Float)
+    description = db.Column(db.String(1000))
+    url = db.Column(db.String(1000))
+    #landlord = db.Column(db.String(100))
+    date = db.Column(db.String(100)) # 20201104
+    img_urls = db.Column(db.String(1000))
 
 # it creates all the SQL tables if they do not exist
 with app.app_context():

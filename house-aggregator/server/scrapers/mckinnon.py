@@ -51,9 +51,13 @@ def getResults(search, pageNum=0):
 
     return results
 
-search = '/available-rentals/'
-results = getResults(search)
+def execute():
 
-with open(f'output/{output}', 'w') as file:
-    file.write(json.dumps(results, sort_keys=True, indent=4))
-    print(f'Wrote {len(results)} to "output/{output}')
+    print("Starting Mckinnon")
+
+    search = '/available-rentals/'
+    results = getResults(search)
+
+    with open(f'output/{output}', 'w') as file:
+        file.write(json.dumps(results, sort_keys=True, indent=4))
+        print(f'Wrote {len(results)} to "output/{output}')

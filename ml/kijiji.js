@@ -5,7 +5,7 @@ const fs = require("fs");
 module.exports = {
     name: "Kijiji.ca",
     baseURL: "https://www.kijiji.ca",
-    search: "/b-kingston-on/student-housing/k0l1700183",
+    search: "/b-for-rent/kingston-on/student-house/k0c30349001l1700183",
     cleanupText(s) {
 
         return s.replace(/(\r\n|\n|\r|)/gm, "").trim();

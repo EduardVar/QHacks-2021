@@ -1,0 +1,268 @@
+[
+    {
+        "address": "233 Brock St., Kingston, Ontario",
+        "bedrooms": "1",
+        "date-available": "February 2021",
+        "landlords": "Keystone Properties",
+        "price": "$795/mth",
+        "title": "Shared Accommodation- Rooms ",
+        "url": "listing.html?id=52",
+        "utilites": {
+            "A/C": true,
+            "electric": true,
+            "heat": true
+        }
+    },
+    {
+        "address": "200-7 Queen St., Kingston, Ontario",
+        "bedrooms": 1,
+        "date-available": "February 2021",
+        "landlords": "Keystone Properties",
+        "price": "$1295.00/mth",
+        "title": "Bachelor Apartment",
+        "url": "listing.html?id=189",
+        "utilites": {
+            "A/C": false,
+            "electric": false,
+            "heat": true
+        }
+    },
+    {
+        "address": "272.5-17 Princess St., Kingston, Ontario",
+        "bedrooms": 1,
+        "date-available": "February 2021",
+        "landlords": "Keystone Properties",
+        "price": "$1295.00/mth",
+        "title": "Bachelor Apartment",
+        "url": "listing.html?id=142",
+        "utilites": {
+            "A/C": false,
+            "electric": false,
+            "heat": false
+        }
+    },
+    {
+        "address": "272.5-3 Princess St., Kingston, Ontario",
+        "bedrooms": 1,
+        "date-available": "May 2021",
+        "landlords": "Keystone Properties",
+        "price": "$1495.00/mth",
+        "title": "Bachelor Apartment ",
+        "url": "listing.html?id=129",
+        "utilites": {
+            "A/C": false,
+            "electric": false,
+            "heat": false
+        }
+    },
+    {
+        "address": "200-2 Queen St., Kingston, Ontario",
+        "bedrooms": "1",
+        "date-available": "February 2021",
+        "landlords": "Keystone Properties",
+        "price": "$1495.00/mth",
+        "title": "1 Bedroom Apartment",
+        "url": "listing.html?id=185",
+        "utilites": {
+            "A/C": false,
+            "electric": false,
+            "heat": true
+        }
+    },
+    {
+        "address": "194-4 Sydenham St., Kingston, Ontario",
+        "bedrooms": "1",
+        "date-available": "May 2021",
+        "landlords": "Keystone Properties",
+        "price": "$1495.00/mth",
+        "title": "1 Bedroom Apartment",
+        "url": "listing.html?id=220",
+        "utilites": {
+            "A/C": false,
+            "electric": false,
+            "heat": true
+        }
+    },
+    {
+        "address": "265-5 Princess St., Kingston, Ontario",
+        "bedrooms": "1",
+        "date-available": "February 2021",
+        "landlords": "Keystone Properties",
+        "price": "$1695.00/mth",
+        "title": "1 Bedroom Apartment",
+        "url": "listing.html?id=93",
+        "utilites": {
+            "A/C": false,
+            "electric": false,
+            "heat": false
+        }
+    },
+    {
+        "address": "272.5-22 Princess St., Kingston, Ontario",
+        "bedrooms": "1",
+        "date-available": "February 2021",
+        "landlords": "Keystone Properties",
+        "price": "$1695.00/mth",
+        "title": "1 Bedroom Apartment",
+        "url": "listing.html?id=147",
+        "utilites": {
+            "A/C": false,
+            "electric": false,
+            "heat": false
+        }
+    },
+    {
+        "address": "272.5-13 Princess St., Kingston, Ontario",
+        "bedrooms": "1",
+        "date-available": "February 2021",
+        "landlords": "Keystone Properties",
+        "price": "$1767/mth",
+        "title": "1 Bedroom Apartment",
+        "url": "listing.html?id=138",
+        "utilites": {
+            "A/C": false,
+            "electric": false,
+            "heat": false
+        }
+    },
+    {
+        "address": "314-2 Princess St, Kingston, Ontario",
+        "bedrooms": "1",
+        "date-available": "February 2021",
+        "landlords": "Keystone Properties",
+        "price": "$1795.00/mth",
+        "title": "1 Bedroom Apartment",
+        "url": "listing.html?id=156",
+        "utilites": {
+            "A/C": false,
+            "electric": false,
+            "heat": false
+        }
+    },
+    {
+        "address": "272.5-11 Princess St., Kingston, Ontario",
+        "bedrooms": "1",
+        "date-available": "February 2021",
+        "landlords": "Keystone Properties",
+        "price": "$1795/mth",
+        "title": "1 Bedroom Apartment",
+        "url": "listing.html?id=136",
+        "utilites": {
+            "A/C": false,
+            "electric": false,
+            "heat": false
+        }
+    },
+    {
+        "address": "267-307 Princess St., Kingston, Ontario",
+        "bedrooms": "1",
+        "date-available": "May 2021",
+        "landlords": "Keystone Properties",
+        "price": "$1920.00/mth",
+        "title": "1 Bedroom Apartment",
+        "url": "listing.html?id=126",
+        "utilites": {
+            "A/C": true,
+            "electric": false,
+            "heat": false
+        }
+    },
+    {
+        "address": "322-2 Princess St., Kingston, Ontario",
+        "bedrooms": "2",
+        "date-available": "Available Now",
+        "landlords": "Keystone Properties",
+        "price": "$1712.00/mth",
+        "title": "Beautiful 2 bedroom",
+        "url": "listing.html?id=164",
+        "utilites": {
+            "A/C": true,
+            "electric": false,
+            "heat": true
+        }
+    },
+    {
+        "address": "332-4 Princess St., Kingston, Ontario",
+        "bedrooms": "2",
+        "date-available": "May 2021",
+        "landlords": "Keystone Properties",
+        "price": "$1838/mth",
+        "title": "2 Bedroom Apartment",
+        "url": "listing.html?id=172",
+        "utilites": {
+            "A/C": false,
+            "electric": false,
+            "heat": false
+        }
+    },
+    {
+        "address": "322-1 Princess St., Kingston, Ontario",
+        "bedrooms": "2",
+        "date-available": "Available Now",
+        "landlords": "Keystone Properties",
+        "price": "$1838/mth",
+        "title": "2 Bedroom Apartment",
+        "url": "listing.html?id=163",
+        "utilites": {
+            "A/C": false,
+            "electric": false,
+            "heat": true
+        }
+    },
+    {
+        "address": "272.5-16 Princess St., Kingston, Ontario",
+        "bedrooms": "2",
+        "date-available": "May 2021",
+        "landlords": "Keystone Properties",
+        "price": "$1848/mth",
+        "title": "2 Bedroom Apartment",
+        "url": "listing.html?id=141",
+        "utilites": {
+            "A/C": false,
+            "electric": false,
+            "heat": false
+        }
+    },
+    {
+        "address": "267-201 Princess St., Kingston, Ontario",
+        "bedrooms": "2",
+        "date-available": "February 2021",
+        "landlords": "Keystone Properties",
+        "price": "$2398.00/mth",
+        "title": "2 Bedroom Apartment",
+        "url": "listing.html?id=113",
+        "utilites": {
+            "A/C": false,
+            "electric": false,
+            "heat": false
+        }
+    },
+    {
+        "address": "186-202 Sydenham St., Kingston, Ontario",
+        "bedrooms": "3",
+        "date-available": "February 2021",
+        "landlords": "Keystone Properties",
+        "price": "$2595/mth",
+        "title": "3 Bedroom Apartment ",
+        "url": "listing.html?id=216",
+        "utilites": {
+            "A/C": false,
+            "electric": false,
+            "heat": false
+        }
+    },
+    {
+        "address": "289-2 Princess St., Kingston, Ontario",
+        "bedrooms": "3",
+        "date-available": "May 2021",
+        "landlords": "Keystone Properties",
+        "price": "$2604/mth",
+        "title": "3 Bedroom Apartment",
+        "url": "listing.html?id=149",
+        "utilites": {
+            "A/C": false,
+            "electric": false,
+            "heat": false
+        }
+    }
+]

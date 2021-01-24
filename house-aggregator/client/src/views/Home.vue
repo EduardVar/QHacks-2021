@@ -25,6 +25,7 @@
             <b-card-body sub-title="Address">
               <b-card-text>
                 <span><strong>Rent: </strong></span>
+                <span><strong>Bedrooms: </strong></span>
                 <span><strong>Date Available: </strong></span>
               </b-card-text>
             </b-card-body>

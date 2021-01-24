@@ -16,14 +16,23 @@ def getResults(search, pageNum=0):
     for post in soup.find("ul", id="listingsResults").find_all("li", type="1"):
 
         postLink = post.select_one("a", href=re.compile('$listing.html\?id=[0-9]+$'))["href"]
+
+        print(postLink)
         
-        postSoup = requests.get(base_url + postLink)
+        postReq = requests.get(base_url + postLink)
+        postSoup = BeautifulSoup(postReq.content, "html.parser")
 
         title = post.find("div", class_="listInformation").find('h2').find_next(string=True)
         address = ' '.join(list(filter(lambda x: isinstance(x, str), post.find("div", class_="listAddress").find('p').contents)))
         price = post.find("div", class_="listAvailability").find("span").string
-        bedrooms = postSoup.find("div", class_="specsCol").find
-        print(bedrooms)
+
+        bedroomStr = postSoup.find("div", class_="specsCol").find("strong", string="Rooms: ").next_sibling
+
+        if (bedroomStr == "Bachelor"):
+            bedrooms = 1;
+
+        else:
+            bedrooms = re.findall(r'\d+', postSoup.find("div", class_="specsCol").find("strong", string="Rooms: ").next_sibling)[0]
 
         utilites = {
             'heat': bool(post.find("img", alt="Heat")),
@@ -39,10 +48,6 @@ def getResults(search, pageNum=0):
             'bedrooms': bedrooms,
             'landlords': "Keystone Properties"
         })
-
-        break
-
-    return results
 
 search = ''
 results = getResults(search)

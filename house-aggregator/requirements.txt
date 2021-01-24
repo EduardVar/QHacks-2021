@@ -29,6 +29,6 @@ Werkzeug==1.0.1
 wrapt==1.11.2
 zipp==0.6.0
 
+beautifulsoup4
 flask-pytest
-seleniumbase
 pymysql

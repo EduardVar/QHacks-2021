@@ -49,8 +49,7 @@ def startScrape(toDo=None):
 
         for func in scrapers:
 
-            #scrapers[func]()
-            pass
+            scrapers[func]()
 
         clean_database()
         loadJSON()
